@@ -63,8 +63,8 @@ SELECT *
 # Find all current/previous employees hired in the 90s
 SELECT *
 	FROM employees
-	WHERE hire_date BETWEEN '1990-01-01' AND '1999-01-01';
-# Count:  133706
+	WHERE hire_date BETWEEN '1990-01-01' AND '1999-12-31';
+# Count:  135214
 
 # Find all current/previous employees born on Christmas
 SELECT *
@@ -76,9 +76,16 @@ SELECT *
 SELECT *
 	FROM (SELECT *
 			FROM employees
-			WHERE hire_date BETWEEN '1990-01-01' AND '1999-01-01') AS n
+			WHERE hire_date BETWEEN '1990-01-01' AND '1999-12-31') AS n
 	WHERE n.birth_date LIKE '%-12-25';
-# Count:  360
+# Count:  362
+
+# Double check without subquery
+SELECT *
+	FROM employees
+	WHERE hire_date BETWEEN '1990-01-01' AND '1999-12-31'
+	AND birth_date LIKE '%-12-25';
+# Count:  362
 
 # Find all current/previous employees with a 'q' in their last name
 SELECT *
