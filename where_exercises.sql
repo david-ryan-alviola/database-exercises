@@ -40,7 +40,7 @@ SELECT *
 		OR last_name LIKE '%e';
 # Count:  30723
 
-# How many employees have a last name that starts with 'E' but doesn't end with 'e'
+# How many employees have a last name that ends with 'e' but doesn't start with 'E'
 SELECT *
 	FROM employees
 	WHERE last_name LIKE '%e'
@@ -53,6 +53,11 @@ SELECT *
 	WHERE last_name LIKE 'E%'
 		AND last_name LIKE '%e';
 # Count:  899
+
+#Altnerate solution
+SELECT *
+	FROM employees
+	WHERE last_name LIKE 'E%e';
 
 # Find all current/previous employees whose last name end with 'e'
 SELECT *
@@ -80,7 +85,7 @@ SELECT *
 	WHERE n.birth_date LIKE '%-12-25';
 # Count:  362
 
-# Double check without subquery
+# Double check without view
 SELECT *
 	FROM employees
 	WHERE hire_date BETWEEN '1990-01-01' AND '1999-12-31'
