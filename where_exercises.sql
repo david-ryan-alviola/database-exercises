@@ -1,16 +1,16 @@
-# where_exercises.sql
+# 1. where_exercises.sql
 
 # Use the employees database
 USE employees;
 SHOW TABLES;
 DESCRIBE employees;
 
-# Find all current/previous employees with first names Irena, Vidya, or Maya
+# 2. Find all current/previous employees with first names Irena, Vidya, or Maya
 SELECT *
 	FROM employees
 	WHERE first_name IN ('Irena', 'Vidya', 'Maya');
 
-# Same query but use OR instead of IN
+# 3. Same query but use OR instead of IN
 SELECT *
 	FROM employees
 	WHERE first_name = 'Irena'
@@ -18,7 +18,7 @@ SELECT *
 		OR first_name = 'Maya';
 # Both counts match:  709
 
-# Find all previous results AND male employees
+# 4. Find all previous results AND male employees
 SELECT *
 	FROM employees
 	WHERE (first_name = 'Irena'
@@ -27,13 +27,13 @@ SELECT *
 		AND gender = 'M';
 # Count:  441
 
-# Find all current/previous employees whose last name starts with 'E'
+# 5. Find all current/previous employees whose last name starts with 'E'
 SELECT *
 	FROM employees
 	WHERE last_name LIKE 'E%';
 # Count:  7330
 
-# Find all current/previous employees whose last name starts or ends with 'E'
+# 6. Find all current/previous employees whose last name starts or ends with 'E'
 SELECT *
 	FROM employees
 	WHERE last_name LIKE 'E%'
@@ -47,7 +47,7 @@ SELECT *
 		AND last_name NOT LIKE 'E%';
 # Count:  23393
 
-# Find all current/previous employees whose last name that starts and ends with 'E'
+# 7. Find all current/previous employees whose last name that starts and ends with 'E'
 SELECT *
 	FROM employees
 	WHERE last_name LIKE 'E%'
@@ -60,19 +60,19 @@ SELECT *
 	WHERE last_name LIKE '%e';
 # Count:  24292
 
-# Find all current/previous employees hired in the 90s
+# 8. Find all current/previous employees hired in the 90s
 SELECT *
 	FROM employees
 	WHERE hire_date BETWEEN '1990-01-01' AND '1999-12-31';
 # Count:  135214
 
-# Find all current/previous employees born on Christmas
+# 9. Find all current/previous employees born on Christmas
 SELECT *
 	FROM employees
 	WHERE birth_date LIKE '%-12-25';
 # Count:  842
 
-# Find all current/previous employees hired in the 90s and born on Christmas
+# 10. Find all current/previous employees hired in the 90s and born on Christmas
 SELECT *
 	FROM (SELECT *
 			FROM employees
@@ -87,13 +87,13 @@ SELECT *
 	AND birth_date LIKE '%-12-25';
 # Count:  362
 
-# Find all current/previous employees with a 'q' in their last name
+# 11. Find all current/previous employees with a 'q' in their last name
 SELECT *
 	FROM employees
 	WHERE last_name LIKE '%q%';
 # Count:  1873
 
-# Find all current/previous employees with a 'q' in their last name but not 'qu'
+# 12. Find all current/previous employees with a 'q' in their last name but not 'qu'
 SELECT *
 	FROM employees
 	WHERE last_name LIKE '%q%'
