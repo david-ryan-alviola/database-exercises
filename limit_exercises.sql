@@ -23,4 +23,5 @@ SELECT first_name, last_name
 		AND birth_date LIKE '%-12-25'
 	ORDER BY hire_date
 	LIMIT 5 OFFSET 45;
+# Pranay Narwekar, Marjo Farrow, Ennio Karcich, Dines Lubanchevsky, Ipke Fontan
 # offset = (limit * page) - limit
