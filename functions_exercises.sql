@@ -23,15 +23,13 @@ SELECT MAX(salary) AS max_salary, MIN(salary) AS min_salary
 	WHERE to_date > CURDATE();
 
 # 6. Use your knowledge of built in SQL functions to generate a username for all of the current and previous employees. A username should be all lowercase, and consist of the first character of the employees first name, the first 4 characters of the employees last name, an underscore, the month the employee was born, and the last two digits of the year that they were born.
-SELECT CONCAT(
-			LOWER(
-				CONCAT(
-					SUBSTR(first_name, 1, 1),
-					SUBSTR(last_name, 1, 4),
-					'_',
-					SUBSTR(CAST(birth_date AS CHAR), 6, 2),
-					SUBSTR(CAST(birth_date AS CHAR), 3, 2)
-				)
+SELECT LOWER(
+			CONCAT(
+				SUBSTR(first_name, 1, 1),
+				SUBSTR(last_name, 1, 4),
+				'_',
+				SUBSTR(CAST(birth_date AS CHAR), 6, 2),
+				SUBSTR(CAST(birth_date AS CHAR), 3, 2)
 			)
 		) AS username,
 		first_name, last_name, birth_date
