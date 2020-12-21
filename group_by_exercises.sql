@@ -65,13 +65,13 @@ SELECT LOWER(
         SUBSTR(CAST(birth_date AS CHAR), 6, 2),
         SUBSTR(CAST(birth_date AS CHAR), 3, 2)
         )
-	) AS username, count(*)
-    FROM employees
+	) AS username
+    FROM employees;
     GROUP BY username
     ORDER BY count(*) DESC;
     
 # BONUS: How many duplicate usernames are there?
-SELECT sum(usernames.counts) as duplicated_usernames
+SELECT COUNT(usernames.counts) as duplicated_usernames
 	FROM (
 		SELECT LOWER(
 			CONCAT(
