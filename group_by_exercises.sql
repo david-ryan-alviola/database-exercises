@@ -56,7 +56,7 @@ SELECT gender, count(*)
 /* M	441
    F	268 */
    
-# 8. Using your query that generates a username for all of the employees, generate a count employees for each unique username. Are there any duplicate usernames? BONUS: How many duplicate usernames are there?
+# 8. Using your query that generates a username for all of the employees, generate a count employees for each unique username. Are there any duplicate usernames?
 SELECT LOWER(
 	CONCAT(
     	SUBSTR(first_name, 1, 1),
@@ -69,3 +69,21 @@ SELECT LOWER(
     FROM employees
     GROUP BY username
     ORDER BY count(*) DESC;
+    
+# BONUS: How many duplicate usernames are there?
+SELECT sum(usernames.counts) as dulicated_usernames
+	FROM (
+		SELECT LOWER(
+			CONCAT(
+		    	SUBSTR(first_name, 1, 1),
+		        SUBSTR(last_name, 1, 4),
+		        '_',
+		        SUBSTR(CAST(birth_date AS CHAR), 6, 2),
+		        SUBSTR(CAST(birth_date AS CHAR), 3, 2)
+		        )
+			) AS username, count(*) as counts
+		    FROM employees
+	    GROUP BY username
+	    ORDER BY count(*) DESC
+	) as usernames
+	where usernames.counts > 1;
