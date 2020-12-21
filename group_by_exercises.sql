@@ -71,7 +71,7 @@ SELECT LOWER(
     ORDER BY count(*) DESC;
     
 # BONUS: How many duplicate usernames are there?
-SELECT sum(usernames.counts) as dulicated_usernames
+SELECT sum(usernames.counts) as duplicated_usernames
 	FROM (
 		SELECT LOWER(
 			CONCAT(
@@ -81,9 +81,9 @@ SELECT sum(usernames.counts) as dulicated_usernames
 		        SUBSTR(CAST(birth_date AS CHAR), 6, 2),
 		        SUBSTR(CAST(birth_date AS CHAR), 3, 2)
 		        )
-			) AS username, count(*) as counts
+			) AS username, count(*) AS counts
 		    FROM employees
 	    GROUP BY username
 	    ORDER BY count(*) DESC
-	) as usernames
-	where usernames.counts > 1;
+	) AS usernames
+	WHERE usernames.counts > 1;
