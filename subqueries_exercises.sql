@@ -74,7 +74,11 @@ SELECT first_name, last_name, salary
 
 # 6. How many current salaries are within 1 standard deviation of the current highest salary? (Hint: you can use a built in function to calculate the standard deviation.) What percentage of all salaries is this?
 
-SELECT count(*)
+SELECT count(*) / (
+	SELECT count(*)
+		FROM salaries
+		WHERE to_date > curdate()
+	)
 	FROM salaries
 	WHERE ((
 		SELECT max(salary)
@@ -86,10 +90,13 @@ SELECT count(*)
 			WHERE to_date > curdate()
 		)
 		AND to_date > curdate();
-		
+
+
 # Standard deviation of current salaries:  17309.95933634675
 # Highest current salary:  158220
 # 83 current salaries that are within 1STD of the max current salary
+# 240124 current salaries total
+# 83/240124 ~ .0003
 
 # Bonus 1. Find all the department names that currently have female managers.
 
