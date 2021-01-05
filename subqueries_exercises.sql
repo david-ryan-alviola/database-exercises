@@ -84,11 +84,12 @@ SELECT count(*)
 		SELECT std(salary)
 			FROM salaries
 			WHERE to_date > curdate()
-		);
+		)
+		AND to_date > curdate();
 		
 # Standard deviation of current salaries:  17309.95933634675
 # Highest current salary:  158220
-# 220 current salaries that are within 1STD of the max current salary
+# 83 current salaries that are within 1STD of the max current salary
 
 # Bonus 1. Find all the department names that currently have female managers.
 
