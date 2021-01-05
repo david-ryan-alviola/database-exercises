@@ -89,3 +89,54 @@ SELECT count(*)
 # Standard deviation of current salaries:  17309.95933634675
 # Highest current salary:  158220
 # 220 current salaries that are within 1STD of the max current salary
+
+# Bonus 1. Find all the department names that currently have female managers.
+
+SELECT dept_name AS 'Departments currently managed by females'
+	FROM departments
+		JOIN dept_manager USING(dept_no)
+	WHERE emp_no IN (
+		SELECT emp_no
+			FROM dept_manager
+				JOIN employees USING(emp_no)
+			WHERE emp_no IN (
+				SELECT emp_no
+					FROM employees
+					WHERE gender = 'F')
+						AND to_date > curdate()
+	);
+
+/* Research
+Human Resources
+Finance
+Development */
+
+# 2. Find the first and last name of the employee with the highest salary.
+SELECT first_name, last_name, salary
+	FROM employees
+		JOIN salaries USING(emp_no) 
+	WHERE salary = (
+		SELECT max(salary)
+			FROM salaries
+			WHERE to_date > curdate()
+	);
+
+# Max current salary of 158220 belongs to Tokuyasu Pesch
+
+# 3. Find the department name that the employee with the highest salary works in.
+
+SELECT dept_name
+	FROM departments
+		JOIN dept_emp USING(dept_no)
+	WHERE emp_no IN (
+		SELECT emp_no
+			FROM employees
+				JOIN salaries USING(emp_no) 
+			WHERE salary = (
+				SELECT max(salary)
+					FROM salaries
+					WHERE to_date > curdate()
+		)
+	);
+	
+# Tokuyasu Pesch works in the Sales department
