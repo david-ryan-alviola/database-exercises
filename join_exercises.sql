@@ -130,7 +130,7 @@ SELECT first_name, last_name, salary, dept_name
 	
 # 10. Bonus Find the names of all current employees, their department name, and their current manager's name.
 
-SELECT concat(e.first_name, " ", e.last_name) AS 'Employee Name',
+SELECT concat(e.first_name, ' ', e.last_name) AS 'Employee Name',
 	dept_name AS 'Department Name',
 	concat(m.first_name, ' ', m.last_name) AS 'Manager Name'
 	FROM employees AS e
@@ -145,3 +145,104 @@ SELECT concat(e.first_name, " ", e.last_name) AS 'Employee Name',
 	WHERE dept_emp.to_date > curdate()
 		AND dept_manager.to_date > curdate()
 	ORDER BY dept_name;
+	
+# 11. Bonus Who is the highest paid employee within each department.
+
+(SELECT first_name, last_name, salary, dept_name
+	FROM employees
+		JOIN salaries USING(emp_no)
+		JOIN dept_emp USING(emp_no)
+		JOIN departments USING(dept_no)
+	WHERE dept_name = 'Sales'
+		AND salaries.to_date > curdate()
+		AND dept_emp.to_date > curdate()
+	ORDER BY salary DESC
+	LIMIT 1)
+UNION
+(SELECT first_name, last_name, salary, dept_name
+	FROM employees
+		JOIN salaries USING(emp_no)
+		JOIN dept_emp USING(emp_no)
+		JOIN departments USING(dept_no)
+	WHERE dept_name = 'Marketing'
+		AND salaries.to_date > curdate()
+		AND dept_emp.to_date > curdate()
+	ORDER BY salary DESC
+	LIMIT 1)
+UNION 
+(SELECT first_name, last_name, salary, dept_name
+	FROM employees
+		JOIN salaries USING(emp_no)
+		JOIN dept_emp USING(emp_no)
+		JOIN departments USING(dept_no)
+	WHERE dept_name = 'Finance'
+		AND salaries.to_date > curdate()
+		AND dept_emp.to_date > curdate()
+	ORDER BY salary DESC
+	LIMIT 1)
+UNION 
+(SELECT first_name, last_name, salary, dept_name
+	FROM employees
+		JOIN salaries USING(emp_no)
+		JOIN dept_emp USING(emp_no)
+		JOIN departments USING(dept_no)
+	WHERE dept_name = 'Human Resources'
+		AND salaries.to_date > curdate()
+		AND dept_emp.to_date > curdate()
+	ORDER BY salary DESC
+	LIMIT 1)
+UNION 
+(SELECT first_name, last_name, salary, dept_name
+	FROM employees
+		JOIN salaries USING(emp_no)
+		JOIN dept_emp USING(emp_no)
+		JOIN departments USING(dept_no)
+	WHERE dept_name = 'Production'
+		AND salaries.to_date > curdate()
+		AND dept_emp.to_date > curdate()
+	ORDER BY salary DESC
+	LIMIT 1)
+UNION 
+(SELECT first_name, last_name, salary, dept_name
+	FROM employees
+		JOIN salaries USING(emp_no)
+		JOIN dept_emp USING(emp_no)
+		JOIN departments USING(dept_no)
+	WHERE dept_name = 'Development'
+		AND salaries.to_date > curdate()
+		AND dept_emp.to_date > curdate()
+	ORDER BY salary DESC
+	LIMIT 1)
+UNION
+(SELECT first_name, last_name, salary, dept_name
+	FROM employees
+		JOIN salaries USING(emp_no)
+		JOIN dept_emp USING(emp_no)
+		JOIN departments USING(dept_no)
+	WHERE dept_name = 'Quality Management'
+		AND salaries.to_date > curdate()
+		AND dept_emp.to_date > curdate()
+	ORDER BY salary DESC
+	LIMIT 1)
+UNION
+(SELECT first_name, last_name, salary, dept_name
+	FROM employees
+		JOIN salaries USING(emp_no)
+		JOIN dept_emp USING(emp_no)
+		JOIN departments USING(dept_no)
+	WHERE dept_name = 'Research'
+		AND salaries.to_date > curdate()
+		AND dept_emp.to_date > curdate()
+	ORDER BY salary DESC
+	LIMIT 1)
+UNION
+(SELECT first_name, last_name, salary, dept_name
+	FROM employees
+		JOIN salaries USING(emp_no)
+		JOIN dept_emp USING(emp_no)
+		JOIN departments USING(dept_no)
+	WHERE dept_name = 'Customer Service'
+		AND salaries.to_date > curdate()
+		AND dept_emp.to_date > curdate()
+	ORDER BY salary DESC
+	LIMIT 1);
