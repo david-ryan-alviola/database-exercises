@@ -74,11 +74,11 @@ SELECT first_name, last_name, salary
 
 # 6. How many current salaries are within 1 standard deviation of the current highest salary? (Hint: you can use a built in function to calculate the standard deviation.) What percentage of all salaries is this?
 
-SELECT count(*) / (
+SELECT concat(count(*) / (
 	SELECT count(*)
 		FROM salaries
 		WHERE to_date > curdate()
-	)
+	) * 100, "%") AS 'Percentage of current salaries within 1STD of current highest salary'
 	FROM salaries
 	WHERE ((
 		SELECT max(salary)
