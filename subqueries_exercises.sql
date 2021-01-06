@@ -96,7 +96,7 @@ SELECT count(*) / (
 # Highest current salary:  158220
 # 83 current salaries that are within 1STD of the max current salary
 # 240124 current salaries total
-# 83/240124 ~ .0003
+# 83/240124 ~ .0003 or .03%
 
 # Bonus 1. Find all the department names that currently have female managers.
 
