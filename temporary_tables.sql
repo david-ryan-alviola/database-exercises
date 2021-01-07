@@ -91,8 +91,8 @@ CREATE TEMPORARY TABLE current_salaries_temp AS (
 			JOIN employees.departments USING(dept_no)
 		WHERE s.to_date > curdate()
 		GROUP BY dept_name);
-
-SELECT * FROM current_salaries_temp;
+SELECT *
+	FROM current_salaries_temp;
 
 SELECT round(AVG(salary), 2)
 	FROM employees.salaries;
@@ -100,24 +100,21 @@ SELECT round(AVG(salary), 2)
 
 # Add column to hold historical avg salary value
 ALTER TABLE current_salaries_temp ADD historical_avg_salary DECIMAL(11, 2);
-
 DESCRIBE current_salaries_temp;
 
 UPDATE current_salaries_temp
 	SET historical_avg_salary = (
 		SELECT round(AVG(salary), 2)
 	FROM employees.salaries);
-	
-SELECT * FROM current_salaries_temp;
+SELECT *
+	FROM current_salaries_temp;
 
 # Add column to hold z_scores
 ALTER TABLE current_salaries_temp ADD z_score DECIMAL(11, 4);
-
 DESCRIBE current_salaries_temp;
 
 # Add column to hold the STDDEV value
 ALTER TABLE current_salaries_temp ADD std DECIMAL(11, 4);
-
 DESCRIBE current_salaries_temp;
 
 # Create another temp table to calculate the STDDEV
