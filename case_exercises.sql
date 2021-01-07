@@ -55,3 +55,19 @@ SELECT sum(birth_decade)
 # 117138 total employees born in the 1960s
 
 # Bonus 1. What is the current average salary for each of the following department groups: R&D, Sales & Marketing, Prod & QM, Finance & HR, Customer Service?
+
+USE employees;
+
+SELECT round(AVG(salary), 2) AS average_group_salary,
+	CASE
+		WHEN dept_no IN ('d001', 'd007') THEN 'Sales & Marketing'
+		WHEN dept_no IN ('d002', 'd003') THEN 'Finance & HR'
+		WHEN dept_no IN ('d004', 'd006') THEN 'Prod & QM'
+		WHEN dept_no IN ('d005', 'd008') THEN 'R&D'
+		ELSE dept_name
+	END AS dept_group
+	FROM salaries AS s
+		JOIN dept_emp AS de ON s.emp_no = de.emp_no
+			AND de.to_date > curdate()
+		JOIN departments AS d USING(dept_no)
+	GROUP BY dept_group;
