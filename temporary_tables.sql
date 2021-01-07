@@ -96,5 +96,53 @@ SELECT round(AVG(salary), 2)
 	FROM employees.salaries;
 # Average historical salary is 63810.74
 
+# Add column to hold historical avg salary value
+ALTER TABLE current_salaries_temp ADD historical_avg_salary DECIMAL(11, 2);
 
+DESCRIBE current_salaries_temp;
 
+UPDATE current_salaries_temp
+	SET historical_avg_salary = (
+		SELECT round(AVG(salary), 2)
+	FROM employees.salaries);
+	
+SELECT * FROM current_salaries_temp;
+
+# Add column to hold z_scores
+ALTER TABLE current_salaries_temp ADD z_score DECIMAL(11, 4);
+
+DESCRIBE current_salaries_temp;
+
+# Add column to hold the STDDEV value
+ALTER TABLE current_salaries_temp ADD std DECIMAL(11, 4);
+
+DESCRIBE current_salaries_temp;
+
+# Create another temp table to calculate the STDDEV
+CREATE TEMPORARY TABLE std_temp AS (
+	SELECT dept_name AS department, round(AVG(salary), 2) AS current_avg_salary
+		FROM employees.salaries AS s
+			JOIN employees.dept_emp AS de ON s.emp_no = de.emp_no
+				AND de.to_date > curdate()
+			JOIN employees.departments USING(dept_no)
+		WHERE s.to_date > curdate()
+		GROUP BY dept_name);
+		
+UPDATE current_salaries_temp
+	SET std = (
+		SELECT std(current_avg_salary)
+			FROM std_temp);
+
+SELECT * FROM current_salaries_temp;
+
+UPDATE current_salaries_temp
+	SET z_score = (current_avg_salary - historical_avg_salary) / std;
+	
+ALTER TABLE current_salaries_temp DROP COLUMN historical_avg_salary;
+ALTER TABLE current_salaries_temp DROP COLUMN std;
+
+SELECT * FROM current_salaries_temp
+	ORDER BY z_score DESC;
+	
+# Sales has the highest z-score and thus is the most standard deviations above the mean, so on average, salaries in sales are highest.
+# HR has the lowest z-score so it has the average salary that is the closest to the average historical salary.
