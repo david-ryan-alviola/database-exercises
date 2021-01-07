@@ -60,7 +60,6 @@ SELECT * FROM employees_with_dept_alternate;
 CREATE TEMPORARY TABLE payment_temp AS (
 	SELECT *
 		FROM sakila.payment);
-
 DESCRIBE payment_temp;
 
 ALTER TABLE payment_temp ADD amount_in_cents INT(3);
@@ -68,13 +67,16 @@ UPDATE payment_temp
 	SET amount_in_cents = amount * 100;
 SELECT amount, amount_in_cents
 	FROM payment_temp;
+
 ALTER TABLE payment_temp DROP COLUMN amount;
 DESCRIBE payment_temp;
+
 ALTER TABLE payment_temp ADD amount INT(3);
 UPDATE payment_temp
 	SET amount = amount_in_cents;
 SELECT amount, amount_in_cents
 	FROM payment_temp;
+
 ALTER TABLE payment_temp DROP COLUMN amount_in_cents;
 SELECT *
 	FROM payment_temp;
