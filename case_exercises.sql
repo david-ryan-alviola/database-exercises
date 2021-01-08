@@ -9,6 +9,11 @@ SELECT emp_no, dept_no, hire_date, to_date,
 	FROM employees
 		JOIN dept_emp USING(emp_no);
 		
+SELECT *
+	FROM employees
+		JOIN dept_emp USING(emp_no);
+# FIXME:  Check the solution for this. You are including employees twice if the worked for multiple departments.		
+
 # 2. Write a query that returns all employee names (previous and current), and a new column 'alpha_group' that returns 'A-H', 'I-Q', or 'R-Z' depending on the first letter of their last name.
 
 SELECT first_name, last_name,
@@ -23,7 +28,8 @@ SELECT first_name, last_name,
 	END AS alpha_group
 	FROM employees
 	ORDER BY last_name;
-	
+# Can also use left(last_name, 1) instead of substr()
+
 # 3. How many employees (current or previous) were born in each decade?
 
 SELECT max(substr(birth_date, 1, 4))
@@ -54,6 +60,16 @@ SELECT sum(birth_decade)
 	FROM sixties_babies;
 # 117138 total employees born in the 1960s
 
+# Alternate solution
+SELECT
+	CASE
+		WHEN birth_date LIKE '195%' THEN '50s'
+		ELSE '60s'
+	END AS decade,
+	count(*)
+	FROM employees
+	GROUP BY decade;
+
 # Bonus 1. What is the current average salary for each of the following department groups: R&D, Sales & Marketing, Prod & QM, Finance & HR, Customer Service?
 
 USE employees;
@@ -70,4 +86,5 @@ SELECT round(AVG(salary), 2) AS average_group_salary,
 		JOIN dept_emp AS de ON s.emp_no = de.emp_no
 			AND de.to_date > curdate()
 		JOIN departments AS d USING(dept_no)
+	WHERE s.to_date > curdate()
 	GROUP BY dept_group;
